@@ -6,12 +6,12 @@ import (
 	"errors"
 )
 
-// AES-ECB 加密数据
+// ECBEncrypt AES-ECB 加密数据
 func ECBEncrypt(originData, key []byte) ([]byte, error) {
 	return ecbEncrypt(originData, key)
 }
 
-// AES-ECB 解密数据
+// ECBDecrypt AES-ECB 解密数据
 func ECBDecrypt(secretData, key []byte) ([]byte, error) {
 	return ecbDecrypt(secretData, key)
 }
@@ -23,7 +23,7 @@ func ecbEncrypt(originData, key []byte) ([]byte, error) {
 	}
 	originData = PKCS7Padding(originData, block.BlockSize())
 	secretData := make([]byte, len(originData))
-	blockMode := newECBEncrypter(block)
+	blockMode := newECBEncrypted(block)
 	blockMode.CryptBlocks(secretData, originData)
 	return secretData, nil
 }
@@ -33,7 +33,7 @@ func ecbDecrypt(secretData, key []byte) (originByte []byte, err error) {
 	if err != nil {
 		return nil, err
 	}
-	blockMode := newECBDecrypter(block)
+	blockMode := newECBDecrypted(block)
 	originByte = make([]byte, len(secretData))
 	blockMode.CryptBlocks(originByte, secretData)
 	if len(originByte) == 0 {
@@ -41,8 +41,6 @@ func ecbDecrypt(secretData, key []byte) (originByte []byte, err error) {
 	}
 	return PKCS7UnPadding(originByte), nil
 }
-
-// ===========
 
 type ecb struct {
 	b         cipher.Block
@@ -56,17 +54,17 @@ func newECB(b cipher.Block) *ecb {
 	}
 }
 
-type ecbEncrypter ecb
+type ecbEncrypted ecb
 
-// newECBEncrypter returns a BlockMode which encrypts in electronic code book
+// newECBEncrypted returns a BlockMode which encrypts in electronic code book encrypted
 // mode, using the given Block.
-func newECBEncrypter(b cipher.Block) cipher.BlockMode {
-	return (*ecbEncrypter)(newECB(b))
+func newECBEncrypted(b cipher.Block) cipher.BlockMode {
+	return (*ecbEncrypted)(newECB(b))
 }
 
-func (x *ecbEncrypter) BlockSize() int { return x.blockSize }
+func (x *ecbEncrypted) BlockSize() int { return x.blockSize }
 
-func (x *ecbEncrypter) CryptBlocks(dst, src []byte) {
+func (x *ecbEncrypted) CryptBlocks(dst, src []byte) {
 	if len(src)%x.blockSize != 0 {
 		panic("crypto/cipher: input not full blocks")
 	}
@@ -80,17 +78,17 @@ func (x *ecbEncrypter) CryptBlocks(dst, src []byte) {
 	}
 }
 
-type ecbDecrypter ecb
+type ecbDecrypted ecb
 
-// newECBDecrypter returns a BlockMode which decrypts in electronic code book
+// newECBDecrypted returns a BlockMode which decrypts in electronic code book
 // mode, using the given Block.
-func newECBDecrypter(b cipher.Block) cipher.BlockMode {
-	return (*ecbDecrypter)(newECB(b))
+func newECBDecrypted(b cipher.Block) cipher.BlockMode {
+	return (*ecbDecrypted)(newECB(b))
 }
 
-func (x *ecbDecrypter) BlockSize() int { return x.blockSize }
+func (x *ecbDecrypted) BlockSize() int { return x.blockSize }
 
-func (x *ecbDecrypter) CryptBlocks(dst, src []byte) {
+func (x *ecbDecrypted) CryptBlocks(dst, src []byte) {
 	if len(src)%x.blockSize != 0 {
 		panic("crypto/cipher: input not full blocks")
 	}

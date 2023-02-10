@@ -2,7 +2,7 @@ package aes
 
 import "bytes"
 
-// 加密填充模式（添加补全码） PKCS5Padding
+// PKCS5Padding 加密填充模式（添加补全码） PKCS5Padding
 // 加密时，如果加密bytes的length不是blockSize的整数倍，需要在最后面添加填充byte
 func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
 	paddingCount := blockSize - len(ciphertext)%blockSize //需要padding的数目
@@ -11,7 +11,7 @@ func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
 	return append(ciphertext, padtext...)
 }
 
-// 解密填充模式（去除补全码） PKCS5UnPadding
+// PKCS5UnPadding 解密填充模式（去除补全码） PKCS5UnPadding
 // 解密时，需要在最后面去掉加密时添加的填充byte
 func PKCS5UnPadding(origData []byte) []byte {
 	length := len(origData)
@@ -19,7 +19,7 @@ func PKCS5UnPadding(origData []byte) []byte {
 	return origData[:(length - unpadding)] //只截取返回有效数字内的byte数组
 }
 
-// 加密填充模式（添加补全码） PKCS5Padding
+// PKCS7Padding 加密填充模式（添加补全码） PKCS5Padding
 // 加密时，如果加密bytes的length不是blockSize的整数倍，需要在最后面添加填充byte
 func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	paddingCount := blockSize - len(ciphertext)%blockSize //需要padding的数目
@@ -28,7 +28,7 @@ func PKCS7Padding(ciphertext []byte, blockSize int) []byte {
 	return append(ciphertext, padtext...)
 }
 
-// 解密填充模式（去除补全码） PKCS7UnPadding
+// PKCS7UnPadding 解密填充模式（去除补全码） PKCS7UnPadding
 // 解密时，需要在最后面去掉加密时添加的填充byte
 func PKCS7UnPadding(origData []byte) (bs []byte) {
 	length := len(origData)

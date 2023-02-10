@@ -4,16 +4,15 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"fmt"
-
-	"github.com/go-pay/gopay/pkg/util"
+	"github.com/yiuked/gopkg/utils"
 )
 
-// AES-GCM 加密数据
+// GCMEncrypt AES-GCM 加密数据
 func GCMEncrypt(originText, additional, key []byte) (nonce []byte, cipherText []byte, err error) {
 	return gcmEncrypt(originText, additional, key)
 }
 
-// AES-GCM 解密数据
+// GCMDecrypt AES-GCM 解密数据
 func GCMDecrypt(cipherText, nonce, additional, key []byte) ([]byte, error) {
 	return gcmDecrypt(cipherText, nonce, additional, key)
 }
@@ -39,7 +38,7 @@ func gcmEncrypt(originText, additional, key []byte) ([]byte, []byte, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	nonce := []byte(util.RandomString(12))
+	nonce := []byte(utils.RandomString(12))
 	gcm, err := cipher.NewGCM(block)
 	if err != nil {
 		return nil, nil, fmt.Errorf("cipher.NewGCM(),error:%w", err)
