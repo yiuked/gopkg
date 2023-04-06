@@ -5,11 +5,11 @@
 package wx
 
 import (
-	"catering/common/xhttp"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
+	"gopkg/xhttp"
 	"log"
 	"sync"
 	"time"
