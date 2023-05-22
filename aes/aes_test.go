@@ -2,9 +2,8 @@ package aes
 
 import (
 	"encoding/base64"
+	"github.com/yiuked/gopkg/xlog"
 	"testing"
-
-	"github.com/go-pay/gopay/pkg/xlog"
 )
 
 var (
