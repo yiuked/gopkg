@@ -1,16 +1,20 @@
+// You can edit this code!
+// Click here and start typing.
 package main
 
 import (
-	"fmt"
+	"log"
+	"math"
+	"time"
 )
 
-type Slice[T int | float32 | float64] []T
-type SliceS[T ~int | ~float32 | ~float64] []T
-
 func main() {
-	price := Slice[float32]{-1.1, -1.2, 0.0}
-	fmt.Println(price)
+	log.Println(NaturalDayDiff(time.Now(), time.Date(2023, 5, 31, 23, 1, 1, 1, time.Local)))
+}
 
-	priceS := SliceS[float32]{-1.1, -1.2, 0.0}
-	fmt.Println(priceS)
+// NaturalDayDiff 自然天数差
+func NaturalDayDiff(from, to time.Time) int {
+	from = time.Date(from.Year(), from.Month(), from.Day(), 0, 0, 0, 0, time.Local)
+	to = time.Date(to.Year(), to.Month(), to.Day(), 0, 0, 0, 0, time.Local)
+	return int(math.Abs(float64(to.Sub(from) / (24 * time.Hour))))
 }

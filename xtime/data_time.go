@@ -97,3 +97,10 @@ func GetLastMonthDays() (monthDays []string) {
 	}
 	return monthDays
 }
+
+// NaturalDayDiff 自然天数差
+func NaturalDayDiff(from, to time.Time) int {
+	from = time.Date(from.Year(), from.Month(), from.Day(), 0, 0, 0, 0, time.Local)
+	to = time.Date(to.Year(), to.Month(), to.Day(), 0, 0, 0, 0, time.Local)
+	return int(to.Sub(from) / (24 * time.Hour))
+}
