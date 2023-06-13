@@ -175,7 +175,6 @@ func (c *Client) SendMultipartBodyMap(bm map[string]interface{}) (client *Client
 	return c
 }
 
-// encodeStr: url.Values.Encode() or jsonBody
 func (c *Client) SendString(encodeStr string) (client *Client) {
 	switch c.requestType {
 	case TypeJSON:

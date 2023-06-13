@@ -31,7 +31,7 @@ func isLeap(year int) bool {
 	return year%4 == 0 && (year%100 != 0 || year%400 == 0)
 }
 
-// 获取最近 7天 日期
+// GetRecentSevenDay 获取最近 7天 日期
 func GetRecentSevenDay() (sevenDays []string) {
 	now := time.Now()
 	nowDay := time.Date(now.Year(), now.Month(), now.Day()-7, 0, 0, 0, 0, time.Local)
@@ -42,7 +42,7 @@ func GetRecentSevenDay() (sevenDays []string) {
 	return sevenDays
 }
 
-// 获取最近 30天 日期
+// GetRecentThirtyDay 获取最近 30天 日期
 func GetRecentThirtyDay() (thirtyDays []string) {
 	now := time.Now()
 	nowDay := time.Date(now.Year(), now.Month(), now.Day()-30, 0, 0, 0, 0, time.Local)
@@ -53,7 +53,7 @@ func GetRecentThirtyDay() (thirtyDays []string) {
 	return thirtyDays
 }
 
-// 获取本周 7天 日期
+// GetCurWeekDays 获取本周 7天 日期
 func GetCurWeekDays() (curWeekDays []string) {
 	now := time.Now()
 	offset := int(time.Monday - now.Weekday())
@@ -68,7 +68,7 @@ func GetCurWeekDays() (curWeekDays []string) {
 	return
 }
 
-// 获取本月 日期
+// GetCurMonthDays 获取本月 日期
 func GetCurMonthDays() (curMonthDays []string) {
 	now := time.Now()
 	year := now.Year()
@@ -83,7 +83,7 @@ func GetCurMonthDays() (curMonthDays []string) {
 	return curMonthDays
 }
 
-// 获取上一个月 日期
+// GetLastMonthDays 获取上一个月 日期
 func GetLastMonthDays() (monthDays []string) {
 	now := time.Now()
 	year := now.Year()
