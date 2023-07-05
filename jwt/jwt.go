@@ -1,4 +1,4 @@
-package utils
+package lib
 
 import (
 	"errors"
@@ -35,7 +35,8 @@ func NewJWT(key string, expire time.Duration) *JWT {
 	}
 }
 
-func (j *JWT) CreateClaims(userID uint, userName, phone string) CustomClaims {
+// 创建一个token
+func (j *JWT) CreateToken(userID uint, userName, phone string) (string, error) {
 	claims := CustomClaims{
 		UserID:   userID,
 		UserName: userName,
@@ -44,11 +45,6 @@ func (j *JWT) CreateClaims(userID uint, userName, phone string) CustomClaims {
 			ExpiresAt: jwt.NewNumericDate(time.Now().Add(j.expires)), //
 		},
 	}
-	return claims
-}
-
-// 创建一个token
-func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
